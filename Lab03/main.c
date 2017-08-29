@@ -207,20 +207,19 @@ int min(int a, int b) {
 }
 
 char caractere_porcentagem(double porcentagem_usados) {
-    /** P do enunciado, porcentagem de bytes livres */
-    int porcentagem_livre = 1.0 - porcentagem_usados;
-    if(0.75 < porcentagem_livre && porcentagem_livre <= 1.0) {
-        return ' ';
-    } else if(0.25 < porcentagem_livre && porcentagem_livre <= 0.75) {
+    /* 75 < P <= 100, 25 < P <= 75 ou 0 <= P <= 25 */
+    if(porcentagem_usados >= 75.0) {
+        return '#';
+    } else if(25.0 <= porcentagem_usados && porcentagem_usados < 75.0) {
         return '-';
     } else {
-        return '#';
+        return ' ';
     }
 }
 
 void imprimir_disco(Disco *disco) {
     /** Porcentagem de bytes utilizados */
-    double blocos[8] = {0};
+    double blocos[8] = {0.0};
 
     /* Para cada arquivo... */
     Arquivo *arquivo = disco->arquivo_inicial;
@@ -259,7 +258,9 @@ void imprimir_disco(Disco *disco) {
             /* Se o intervalo de intersecção existe... */
             if(fim >= inicio) {
                 /* ... adicionamos a porcentagem utilizada daquele bloco */
-                blocos[i] += (double) ((fim - inicio) / (disco->capacidade / 8.0));
+                blocos[i] += (double) (
+                    ((fim - inicio) * 100.0) / (disco->capacidade / 8.0)
+                );
             }
         }
     }

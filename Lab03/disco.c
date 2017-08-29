@@ -194,7 +194,7 @@ void liberar_disco(Disco **disco) {
         return;
     }
 
-    Arquivo *arquivo = (*disco)->arquivo_inicial, *auxiliar = NULL;
+    Arquivo *auxiliar = NULL;
     for(; (*disco)->arquivo_inicial != NULL; ) {
         /* Guardamos o arquivo inicial */
         auxiliar = (*disco)->arquivo_inicial;
