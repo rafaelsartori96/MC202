@@ -206,22 +206,20 @@ int min(int a, int b) {
     return a > b ? b : a;
 }
 
-char caractere_porcentagem(double porcentagem) {
-    if(0.75 < porcentagem && porcentagem <= 1.0) {
-        return '#';
-    } else if(0.25 < porcentagem && porcentagem <= 0.75) {
+char caractere_porcentagem(double porcentagem_usados) {
+    /** P do enunciado, porcentagem de bytes livres */
+    int porcentagem_livre = 1.0 - porcentagem_usados;
+    if(0.75 < porcentagem_livre && porcentagem_livre <= 1.0) {
+        return ' ';
+    } else if(0.25 < porcentagem_livre && porcentagem_livre <= 0.75) {
         return '-';
     } else {
-        return ' ';
+        return '#';
     }
 }
 
 void imprimir_disco(Disco *disco) {
     /** Porcentagem de bytes utilizados */
-    /* Nota: o enunciado utiliza P como porcentagem de bytes livres, o que
-    * implica que '#' representa bloco com 75-100% dos bytes livres, o que é
-    * contra intuitivo e me faz acreditar ser um erro de digitação.
-    * Logo, utilizarei P como porcentagem de bytes ocupados.*/
     double blocos[8] = {0};
 
     /* Para cada arquivo... */
