@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "vector.h"
 
 
@@ -201,7 +202,7 @@ int resize_vector(Vector *vector, int new_length) {
     }
 
     /* Check if we can decrease the vector */
-    if(new_length < vector->size) {
+    if(vector->size > new_length) {
         return 0;
     }
 
@@ -240,8 +241,8 @@ int *get_(Vector *vector, int position) {
     /* Check if we're accessing a full vector trying to insert a new item and
     * failed to resize it */
     if(
-        vector->length == vector->size &&
-        (position >= (vector->length + 1) || position == -1) &&
+        vector->size >= vector->length &&
+        (position >= vector->length || position == -1) &&
         !resize_vector(vector, vector->length * 2)
     ) {
         return NULL;
