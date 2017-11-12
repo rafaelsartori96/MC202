@@ -55,23 +55,24 @@ void quicksort_no_partition(int *vector, int length) {
 
 
 void quicksort_np(int *vector, int start, int end) {
-   int i = start, j = end, middle = ((i + j) >> 1), pivot = *(vector + middle);
+    int i = start, j = end, middle = ((i + j) >> 1);
+    int pivot = *(vector + middle);
 
-   do {
-      while(*(vector + i) < pivot) i++;
-      while(*(vector + j) > pivot) j--;
+    do {
+        while(*(vector + i) < pivot) i++;
+        while(*(vector + j) > pivot) j--;
 
-      if(i <= j){
-         int auxiliary = *(vector + i);
-         *(vector + i) = *(vector + j);
-         *(vector + j) = auxiliary;
-         i++;
-         j--;
-      }
-   } while(j > i);
+        if(i <= j) {
+            int auxiliary = *(vector + i);
+            *(vector + i) = *(vector + j);
+            *(vector + j) = auxiliary;
+            i++;
+            j--;
+        }
+    } while(j > i);
 
-   if(start < j) quicksort_np(vector, start, j);
-   if(i < end) quicksort_np(vector, i, end);
+    if(start < j) quicksort_np(vector, start, j);
+    if(i < end) quicksort_np(vector, i, end);
 }
 
 
@@ -219,8 +220,8 @@ void heapsort(int *vector, int length) {
     * maximum and put it on the end of the vector */
 
     /* We will start 'inserting' items on the vector, just as a heap would.
-    * Since we won't need to check the parent of the first node, start at index
-    * 1 */
+    * Since we won't need to check the parent of the first node, start at
+    * index 1 */
     for(int i = 1; i < length; i++) {
         int current_position = i, parent_position = parent(current_position);
 
@@ -228,8 +229,8 @@ void heapsort(int *vector, int length) {
         * done to every parent after swaps (but we don't need to re-check
         * everything if we don't swap) */
         while(*(vector + parent_position) < *(vector + current_position)) {
-            /* Since we're building a maximum heap, we must swap with the parent
-            * and check again for the parent_position */
+            /* Since we're building a maximum heap, we must swap with the
+            * parent and check again for the parent_position */
             swap((vector + parent_position), (vector + current_position));
             current_position = parent_position;
             if(current_position == 0) break;
@@ -237,13 +238,14 @@ void heapsort(int *vector, int length) {
         }
     }
 
-    /* Now that we have a maximum heap, let's start 'removing' items and putting
-    * the maximum nodes on the end of the vector. */
+    /* Now that we have a maximum heap, let's start 'removing' items and
+    * inserting the maximum nodes on the end of the vector. */
     while(1) {
         /* Like other heap removals, lets swap the maximum node with the last
         * position */
         swap((vector + length - 1), (vector + 0));
-        /* Decrease the length. The removed node will be on its correct place */
+        /* Decrease the length. The removed node will be on its correct
+        * place */
         length--;
 
         if(length > 0) {
